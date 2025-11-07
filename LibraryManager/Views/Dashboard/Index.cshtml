@@ -1,0 +1,95 @@
+@model LibraryManager.Models.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1 class="mb-4">Library Dashboard</h1>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-bg-primary h-100">
+            <div class="card-body">
+                <p class="text-uppercase fs-6 mb-1">Total Books</p>
+                <h2 class="card-title">@Model.TotalBooks</h2>
+                <p class="mb-0">@Model.AvailableBooks available today</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-success h-100">
+            <div class="card-body">
+                <p class="text-uppercase fs-6 mb-1">Members</p>
+                <h2 class="card-title">@Model.TotalMembers</h2>
+                <p class="mb-0">Active borrowers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-warning h-100">
+            <div class="card-body">
+                <p class="text-uppercase fs-6 mb-1">Active Loans</p>
+                <h2 class="card-title">@Model.ActiveLoans</h2>
+                <p class="mb-0">Currently checked out</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-danger h-100">
+            <div class="card-body">
+                <p class="text-uppercase fs-6 mb-1">Overdue</p>
+                <h2 class="card-title">@Model.OverdueCount</h2>
+                <p class="mb-0">Need attention</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="h4 mb-0">Overdue Loans</h2>
+    <a class="btn btn-outline-primary btn-sm" asp-controller="Loans" asp-action="Index">View all loans</a>
+</div>
+
+@if (Model.OverdueLoans.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Member</th>
+                    <th>Borrowed On</th>
+                    <th>Due On</th>
+                    <th>Days Overdue</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var loan in Model.OverdueLoans)
+            {
+                var days = (DateTime.Today - loan.DueOn.Date).Days;
+                <tr>
+                    <td>@(loan.Book?.Title ?? "Unknown")</td>
+                    <td>@(loan.Member?.FullName ?? "Unknown")</td>
+                    <td>@loan.BorrowedOn.ToShortDateString()</td>
+                    <td>@loan.DueOn.ToShortDateString()</td>
+                    <td>@days</td>
+                    <td class="text-nowrap">
+                        <a class="btn btn-sm btn-outline-secondary" asp-controller="Loans" asp-action="Details" asp-route-id="@loan.Id">Loan</a>
+                        @if (loan.Member != null)
+                        {
+                            <a class="btn btn-sm btn-outline-primary" asp-controller="Members" asp-action="Details" asp-route-id="@loan.MemberId">Member</a>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-success">
+        🎉 No overdue loans right now.
+    </div>
+}

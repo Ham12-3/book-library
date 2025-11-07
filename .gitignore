@@ -1,0 +1,55 @@
+# Build results
+/LibraryManager/bin/
+/LibraryManager/obj/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+
+# Rider / JetBrains
+.idea/
+
+# VS Code settings that may contain personal prefs
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Logs
+*.log
+logs/
+
+# Dotnet tooling
+/.nuget/
+/.paket/
+
+# Publish outputs
+/LibraryManager/**/PublishProfiles/
+/LibraryManager/**/*.pubxml
+/LibraryManager/**/*.publishsettings
+
+# Secrets & configuration
+/LibraryManager/appsettings.Development.json
+/LibraryManager/appsettings.Local.json
+
+# Uploaded assets
+/LibraryManager/wwwroot/images/covers/*
+!/LibraryManager/wwwroot/images/covers/.gitkeep
+
+# OS junk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Tools cache
+*.ncrunchsolution
+*.ncrunchproject
+_ReSharper*/
+*.DotSettings.user

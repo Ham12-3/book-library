@@ -1,0 +1,80 @@
+@model LibraryManager.Models.Book
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Isbn" class="control-label"></label>
+                <input asp-for="Isbn" class="form-control" />
+                <span asp-validation-for="Isbn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PublishedOn" class="control-label"></label>
+                <input asp-for="PublishedOn" class="form-control" />
+                <span asp-validation-for="PublishedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalCopies" class="control-label"></label>
+                <input asp-for="TotalCopies" class="form-control" />
+                <span asp-validation-for="TotalCopies" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvailableCopies" class="control-label"></label>
+                <input asp-for="AvailableCopies" class="form-control" />
+                <span asp-validation-for="AvailableCopies" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthorId" class="control-label"></label>
+                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
+                <span asp-validation-for="AuthorId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label">Current Cover</label>
+                @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+                {
+                    <div class="mb-2">
+                        <img src="@Model.CoverImagePath" alt="@Model.Title cover" class="img-thumbnail" style="max-height: 200px;" />
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="removeImage" name="removeImage" value="true" />
+                        <label class="form-check-label" for="removeImage">Remove existing image</label>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No cover uploaded yet.</p>
+                }
+            </div>
+            <div class="form-group">
+                <label class="control-label">Upload New Cover</label>
+                <input type="file" name="coverImage" class="form-control" accept="image/*" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
